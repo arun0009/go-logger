@@ -7,4 +7,4 @@ We cannot implement a library with one log library and expect applications to us
 of the popular log libraries [logrus](https://github.com/sirupsen/logrus) and [zap](https://github.com/uber-go/zap)
 and this `go-logger` library allows you to use either by using an interface. 
 
-You can add your implementation if you want to add one more log library.
+You can add your implementation if you want to add more log libraries (e.g. zerolog).
