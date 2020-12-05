@@ -5,17 +5,41 @@ type Fields map[string]interface{}
 
 //Logger is our contract for the logger
 type Logger interface {
-	Debugf(format string, args ...interface{})
+	// Debug uses fmt.Sprint to construct and log a message.
+	Debug(args ...interface{})
 
-	Infof(format string, args ...interface{})
+	// Info uses fmt.Sprint to construct and log a message.
+	Info(args ...interface{})
 
-	Warnf(format string, args ...interface{})
+	// Warn uses fmt.Sprint to construct and log a message.
+	Warn(args ...interface{})
 
-	Errorf(format string, args ...interface{})
+	// Error uses fmt.Sprint to construct and log a message.
+	Error(args ...interface{})
 
-	Fatalf(format string, args ...interface{})
+	// Panic uses fmt.Sprint to construct and log a message, then panics.
+	Panic(args ...interface{})
 
-	Panicf(format string, args ...interface{})
+	// Fatal uses fmt.Sprint to construct and log a message, then calls os.Exit.
+	Fatal(args ...interface{})
+
+	// Debugf uses fmt.Sprintf to log a templated message.
+	Debugf(template string, args ...interface{})
+
+	// Infof uses fmt.Sprintf to log a templated message.
+	Infof(template string, args ...interface{})
+
+	// Warnf uses fmt.Sprintf to log a templated message.
+	Warnf(template string, args ...interface{})
+
+	// Errorf uses fmt.Sprintf to log a templated message.
+	Errorf(template string, args ...interface{})
+
+	// Panicf uses fmt.Sprintf to log a templated message, then panics.
+	Panicf(template string, args ...interface{})
+
+	// Fatalf uses fmt.Sprintf to log a templated message, then calls os.Exit.
+	Fatalf(template string, args ...interface{})
 
 	WithFields(keyValues Fields) Logger
 }
