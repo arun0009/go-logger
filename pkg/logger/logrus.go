@@ -149,7 +149,9 @@ func (l *logrusLogEntry) Fatalf(template string, args ...interface{}) {
 
 // WithFields adds fields to the logging context
 func (l *logrusLogEntry) WithFields(fields Fields) Logger {
-	return l.WithFields(fields)
+	return &logrusLogEntry{
+		entry: l.entry.WithFields(convertToLogrusFields(fields)),
+	}
 }
 
 // convertToLogrusFields converts Fields to logrus.Fields
