@@ -35,7 +35,9 @@ func main() {
 	logrusLog.SetOutput(os.Stdout)
 	logrusLog.SetLevel(logrus.DebugLevel)
 	log, _ := logger.NewLogrusLogger(logrusLog)
-	log.WithFields(logger.Fields{
+	logger.ReplaceGlobals(log)
+        //anywhere in your code you can now use logger.L() as its globally set
+	logger.L().WithFields(logger.Fields{
 		"foo": "bar",
 	}).Info("direct")
 }
@@ -61,9 +63,10 @@ func main() {
 		zapcore.DebugLevel)
 	zapLogger := zap.New(core)
 	log, _ := logger.NewZapLogger(zapLogger)
-	log.WithFields(logger.Fields{
+ 	logger.ReplaceGlobals(log)
+        //anywhere in your code you can now use logger.L() as its globally set
+	logger.L().WithFields(logger.Fields{
 		"foo": "bar",
 	}).Info("direct")
 }
-
 ```

@@ -22,7 +22,8 @@ func TestZapInfoLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 	}).Info("direct")
 
@@ -45,7 +46,8 @@ func TestZapInfofLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"ping": "pong",
 	}).Infof("received %s balls", "ping pong")
 
@@ -68,7 +70,8 @@ func TestZapWarnLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 		"log": "zap",
 	}).Warn("direct")
@@ -93,7 +96,8 @@ func TestZapWarnfLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"ping": "pong",
 		"log":  "zap",
 	}).Warnf("received %s balls", "table tennis")
@@ -129,7 +133,8 @@ func TestZapPanicLogger(t *testing.T) {
 		assert.Equal(t, "dataDB", fields["db"])
 		assert.Equal(t, "zap", fields["log"])
 	}()
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"db":  "dataDB",
 		"log": "zap",
 	}).Panic("db not found")
@@ -147,7 +152,8 @@ func TestZapErrorLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"acctNumber": 7899,
 		"log":        "zap",
 	}).Errorf("Error creating account %s", "testAccount")
@@ -172,7 +178,8 @@ func TestZapNoOutputLogger(t *testing.T) {
 	)
 	z := zap.New(core)
 	absLogger, _ := NewZapLogger(z)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 	}).Debugf("direct")
 	assert.Equal(t, "", string(buffer.Bytes()))

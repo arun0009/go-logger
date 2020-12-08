@@ -17,7 +17,8 @@ func TestLogrusInfoLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.DebugLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 	}).Info("direct")
 
@@ -36,7 +37,8 @@ func TestLogrusInfofLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.DebugLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"ping": "pong",
 	}).Infof("received %s balls", "ping pong")
 
@@ -55,7 +57,8 @@ func TestLogrusWarnLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.DebugLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 		"log": "logrus",
 	}).Warn("direct")
@@ -76,7 +79,8 @@ func TestLogrusWarnfLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.DebugLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"ping": "pong",
 		"log":  "logrus",
 	}).Warnf("received %s balls", "table tennis")
@@ -97,6 +101,7 @@ func TestLogrusPanicLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.ErrorLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
+	ReplaceGlobals(absLogger)
 	defer func() {
 		if r := recover(); r == nil {
 			t.Errorf("The code did not panic")
@@ -108,7 +113,7 @@ func TestLogrusPanicLogger(t *testing.T) {
 		assert.Equal(t, "dataDB", fields["db"])
 		assert.Equal(t, "logrus", fields["log"])
 	}()
-	absLogger.WithFields(Fields{
+	L().WithFields(Fields{
 		"db":  "dataDB",
 		"log": "logrus",
 	}).Panic("db not found")
@@ -122,7 +127,8 @@ func TestLogursErrorLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.DebugLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"acctNumber": 7899,
 		"log":        "logrus",
 	}).Errorf("Error creating account %s", "testAccount")
@@ -143,7 +149,8 @@ func TestLogrusNoOutputLogger(t *testing.T) {
 	logrus.SetOutput(&buffer)
 	logrus.SetLevel(log.InfoLevel)
 	absLogger, _ := NewLogrusLogger(logrus)
-	absLogger.WithFields(Fields{
+	ReplaceGlobals(absLogger)
+	L().WithFields(Fields{
 		"foo": "bar",
 	}).Debugf("direct")
 

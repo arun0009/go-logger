@@ -3,6 +3,8 @@ package logger
 //Fields Type to pass when we want to call WithFields for structured logging
 type Fields map[string]interface{}
 
+var logger Logger
+
 //Logger is our contract for the logger
 type Logger interface {
 	// Debug uses fmt.Sprint to construct and log a message.
