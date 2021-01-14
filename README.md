@@ -2,7 +2,10 @@
 
 [![Build Status](https://api.travis-ci.com/arun0009/go-logger.svg?branch=master)](https://travis-ci.com/arun0009/go-logger)
 
-When we create go libraries in general we shouldn't be logging but at times we do have to log, debug what the 
+You can use `logger` as an interface (example below) and set actual implementation to `ReplaceGlobals`, this allows 
+you to change log library without changing your application code.
+
+Also, when we create go libraries in general we shouldn't be logging but at times we do have to log, debug what the 
 library is doing or trace the log. 
 
 We cannot implement a library with one log library and expect applications to use the same log library. We use two 
