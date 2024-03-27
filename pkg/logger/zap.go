@@ -8,7 +8,7 @@ type zapLogger struct {
 	sugaredLogger *zap.SugaredLogger
 }
 
-//NewZapLogger create new logger using zap logger
+// NewZapLogger create new logger using zap logger
 func NewZapLogger(logger *zap.Logger) (Logger, error) {
 	sugaredLogger := logger.WithOptions(zap.AddCallerSkip(1)).Sugar()
 	return &zapLogger{

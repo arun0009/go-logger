@@ -166,7 +166,7 @@ func TestZapErrorLogger(t *testing.T) {
 	assert.Equal(t, "zap", fields["log"])
 }
 
-//set logger to info and see that it doesn't print debug statements
+// set logger to info and see that it doesn't print debug statements
 func TestZapNoOutputLogger(t *testing.T) {
 	var buffer bytes.Buffer
 	writerSync := zapcore.AddSync(&buffer)

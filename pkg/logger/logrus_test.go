@@ -141,7 +141,7 @@ func TestLogursErrorLogger(t *testing.T) {
 	assert.Equal(t, "logrus", fields["log"])
 }
 
-//set logger to info and see that it doesn't print debug statements
+// set logger to info and see that it doesn't print debug statements
 func TestLogrusNoOutputLogger(t *testing.T) {
 	var buffer bytes.Buffer
 	logrus := log.New()

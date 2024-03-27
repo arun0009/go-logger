@@ -12,7 +12,7 @@ type logrusLogger struct {
 	logger *logrus.Logger
 }
 
-//NewLogrusLogger create new logger using logrus logger
+// NewLogrusLogger create new logger using logrus logger
 func NewLogrusLogger(logger *logrus.Logger) (Logger, error) {
 	return &logrusLogger{
 		logger: logger,

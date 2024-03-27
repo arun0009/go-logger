@@ -1,6 +1,6 @@
 module github.com/arun0009/go-logger
 
-go 1.21.1
+go 1.22
 
 require (
 	github.com/sirupsen/logrus v1.9.3
