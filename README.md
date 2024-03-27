@@ -1,7 +1,5 @@
 ## Logger interface with implementations (Zap and Logrus)
 
-[![Build Status](https://api.travis-ci.com/arun0009/go-logger.svg?branch=master)](https://travis-ci.com/arun0009/go-logger)
-
 You can use `logger` as an interface (example below) and set actual implementation to `ReplaceGlobals`, this allows 
 you to change log library without changing your application code.
 
