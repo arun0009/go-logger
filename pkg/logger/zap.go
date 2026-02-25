@@ -1,88 +1,33 @@
 package logger
 
 import (
+	"context"
+
 	"go.uber.org/zap"
 )
 
-type zapLogger struct {
-	sugaredLogger *zap.SugaredLogger
+type ZapLogger struct {
+	logger *zap.SugaredLogger
+	ctx    context.Context
 }
 
-// NewZapLogger create new logger using zap logger
-func NewZapLogger(logger *zap.Logger) (Logger, error) {
-	sugaredLogger := logger.WithOptions(zap.AddCallerSkip(1)).Sugar()
-	return &zapLogger{
-		sugaredLogger: sugaredLogger,
-	}, nil
+func NewZapLogger(logger *zap.Logger) *ZapLogger {
+	return &ZapLogger{logger: logger.Sugar()}
 }
 
-// Debug uses fmt.Sprint to construct and log a message.
-func (l *zapLogger) Debug(args ...interface{}) {
-	l.sugaredLogger.Debug(args...)
+func (z *ZapLogger) Debug(msg string, keyvals ...any) { z.log().Debugw(msg, keyvals...) }
+func (z *ZapLogger) Info(msg string, keyvals ...any)  { z.log().Infow(msg, keyvals...) }
+func (z *ZapLogger) Warn(msg string, keyvals ...any)  { z.log().Warnw(msg, keyvals...) }
+func (z *ZapLogger) Error(msg string, keyvals ...any) { z.log().Errorw(msg, keyvals...) }
+
+func (z *ZapLogger) WithContext(ctx context.Context) Logger {
+	return &ZapLogger{logger: z.logger, ctx: ctx}
 }
 
-// Info uses fmt.Sprint to construct and log a message.
-func (l *zapLogger) Info(args ...interface{}) {
-	l.sugaredLogger.Info(args...)
-}
-
-// Warn uses fmt.Sprint to construct and log a message.
-func (l *zapLogger) Warn(args ...interface{}) {
-	l.sugaredLogger.Warn(args...)
-}
-
-// Error uses fmt.Sprint to construct and log a message.
-func (l *zapLogger) Error(args ...interface{}) {
-	l.sugaredLogger.Error(args...)
-}
-
-// Panic uses fmt.Sprint to construct and log a message, then panics.
-func (l *zapLogger) Panic(args ...interface{}) {
-	l.sugaredLogger.Panic(args...)
-}
-
-// Fatal uses fmt.Sprint to construct and log a message, then calls os.Exit.
-func (l *zapLogger) Fatal(args ...interface{}) {
-	l.sugaredLogger.Fatal(args...)
-}
-
-// Debugf uses fmt.Sprintf to log a templated message.
-func (l *zapLogger) Debugf(template string, args ...interface{}) {
-	l.sugaredLogger.Debugf(template, args...)
-}
-
-// Infof uses fmt.Sprintf to log a templated message.
-func (l *zapLogger) Infof(template string, args ...interface{}) {
-	l.sugaredLogger.Infof(template, args...)
-}
-
-// Warnf uses fmt.Sprintf to log a templated message.
-func (l *zapLogger) Warnf(template string, args ...interface{}) {
-	l.sugaredLogger.Warnf(template, args...)
-}
-
-// Errorf uses fmt.Sprintf to log a templated message.
-func (l *zapLogger) Errorf(template string, args ...interface{}) {
-	l.sugaredLogger.Errorf(template, args...)
-}
-
-// Panicf uses fmt.Sprintf to log a templated message, then panics.
-func (l *zapLogger) Panicf(template string, args ...interface{}) {
-	l.sugaredLogger.Panicf(template, args...)
-}
-
-// Fatalf uses fmt.Sprintf to log a templated message, then calls os.Exit.
-func (l *zapLogger) Fatalf(template string, args ...interface{}) {
-	l.sugaredLogger.Fatalf(template, args...)
-}
-
-// WithFields adds fields to the logging context
-func (l *zapLogger) WithFields(fields Fields) Logger {
-	var f = make([]interface{}, 0)
-	for k, v := range fields {
-		f = append(f, k)
-		f = append(f, v)
+func (z *ZapLogger) log() *zap.SugaredLogger {
+	fields := extractCtxFields(z.ctx)
+	if len(fields) == 0 {
+		return z.logger
 	}
-	newLogger := l.sugaredLogger.With(f...)
-	return &zapLogger{newLogger}
+	return z.logger.With(fields...)
 }

@@ -4,34 +4,46 @@
 *.dll
 *.so
 *.dylib
+go-logger
 
-# Test binary, built with `go test -c`
+# Test binaries
 *.test
+*.test.exe
 
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Output of the go coverage tool
 *.out
+coverage.txt
 
-## IntelliJ
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
 .idea/
 *.iml
 *.ipr
 *.iws
-
-# VSCode
-.vs/
 .vscode/
+.vs/
+*.sublime-project
+*.sublime-workspace
 
-# Vendor
-vendor
+# Dependency directories
+vendor/
 
-# target
-target
+# Build artifacts
+target/
+bin/
 
-## Mac
-.DS_Store
-
-##Docker
+# Environment files
 .env
+.env.*
+!.env.example
 
-##Binary
-go-logger
+# Local logs
+*.log
